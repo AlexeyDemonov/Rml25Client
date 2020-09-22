@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1231
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rml25Client", "Rml25Client\Rml25Client.csproj", "{F1A9FB4E-A76C-45A2-A41A-B0A70E34FBC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1A9FB4E-A76C-45A2-A41A-B0A70E34FBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A9FB4E-A76C-45A2-A41A-B0A70E34FBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A9FB4E-A76C-45A2-A41A-B0A70E34FBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A9FB4E-A76C-45A2-A41A-B0A70E34FBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3188D287-C885-4F37-A15B-2783F8D10A74}
+	EndGlobalSection
+EndGlobal
