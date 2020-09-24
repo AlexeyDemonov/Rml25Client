@@ -13,5 +13,9 @@ namespace Rml25Client
 	/// </summary>
 	public partial class App : Application
 	{
+		private void Handle_Startup(object sender, StartupEventArgs e)
+		{
+			this.MainWindow.Show();
+		}
 	}
 }
