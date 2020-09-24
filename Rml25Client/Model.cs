@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Rml25Client
 	{
 		public bool SetServerAddress(string address, out Exception exception)
 		{
+			
+
 			//TODO
 			exception = null;
 			return true;

@@ -31,11 +31,42 @@ namespace Rml25Client
 
 		private void GetData()
 		{
+			var dataChoiceValid = CheckDataChoiceValid(this.StartDateTime, this.EndDateTime);
+			var deviceChoiceValid = CheckDeviceChoiceValid(this.SelectedDevice);
+
+			if (!(dataChoiceValid && deviceChoiceValid))
+				return;
+
 			this.CurrentData = GetDeviceDataRequest?.Invoke(this.SelectedDevice, this.StartDateTime, this.EndDateTime);
 			var dataSwap = this.CurrentData;
 			this.CurrentData = null;
 			this.CurrentData = dataSwap;
 			RaisePropertyChange(nameof(CurrentData));
+		}
+
+		private bool CheckDataChoiceValid(DateTime startDate, DateTime endDate)
+		{
+			var valid = DateTime.Compare(startDate, endDate) < 0;
+
+			if (!valid)
+				MessageBox.Show(Constants.NOT_VALID_STARTTIME_ENDTIME);
+
+			valid = DateTime.Compare(startDate, DateTime.Now) < 0;
+
+			if (!valid)
+				MessageBox.Show(Constants.NOT_VALID_STARTTIME_TIMENOW);
+
+			return valid;
+		}
+
+		private bool CheckDeviceChoiceValid(string selectedDevice)
+		{
+			var valid = selectedDevice != Constants.NOT_SELECTED;
+
+			if (!valid)
+				MessageBox.Show(Constants.NOT_VALID_DEVICE_CHOICE);
+
+			return valid;
 		}
 	}
 }
