@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="DeviceData.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

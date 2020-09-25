@@ -9,6 +9,8 @@ namespace Rml25Client
 		public static void Main(string[] args)
 		{
 			var app = new App();
+			app.DispatcherUnhandledException += (sender, excArgs) => { Logger.LogTheException(excArgs.Exception); excArgs.Handled = true; };
+
 			var window = new MainWindow();
 			app.MainWindow = window;
 
@@ -21,6 +23,8 @@ namespace Rml25Client
 			model.DeviceListArrived += viewModel.OnDeviceListArrived;
 			model.DeviceDataArrived += viewModel.OnDeviceDataArrived;
 			model.Exception += viewModel.OnAppException;
+
+			model.Exception += Logger.LogTheException;
 
 			app.InitializeComponent();
 			app.Run();
