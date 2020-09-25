@@ -6,8 +6,8 @@ namespace Rml25Client
 {
 	partial class ViewModel
 	{
-		public event Func<string[]> GetDeviceListRequest;
-		public event Func<string, DateTime, DateTime, DeviceData[]> GetDeviceDataRequest;
+		public event Action DeviceListRequest;
+		public event Action<string, DateTime, DateTime> DeviceDataRequest;
 
 		public ViewModel()
 		{
@@ -16,20 +16,41 @@ namespace Rml25Client
 
 		private void OnApplicationStart(object sender, StartupEventArgs e)
 		{
-			var deviceList = new List<string>() { Constants.NOT_SELECTED };
-			var obtainedDeviceList = GetDeviceListRequest?.Invoke();
+			DeviceList = new string[] { Constants.NOT_SELECTED };
+			SelectedDevice = DeviceList[0];
+			StartDateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1.0));
+			EndDateTime = DateTime.Now;
+			GetDataCommand = new ViewCommand(GetDataFromDevice);
 
-			if (obtainedDeviceList != null)
-				deviceList.AddRange(obtainedDeviceList);
-
-			this.DeviceList = deviceList.ToArray();
-			this.SelectedDevice = DeviceList[0];
-			this.StartDateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1.0));
-			this.EndDateTime = DateTime.Now;
-			this.GetDataCommand = new ViewCommand(GetData);
+			DeviceListRequest?.Invoke();
 		}
 
-		private void GetData()
+		public void OnDeviceListArrived(string[] deviceList)
+		{
+			DeviceList = null;
+			var newDeviceList = new List<string>(deviceList);
+			newDeviceList.Insert(0, Constants.NOT_SELECTED);
+			DeviceList = newDeviceList.ToArray();
+
+			SelectedDevice = DeviceList[0];
+
+			RaisePropertyChange(nameof(DeviceList));
+			RaisePropertyChange(nameof(SelectedDevice));
+		}
+
+		public void OnDeviceDataArrived(DeviceData[] deviceData)
+		{
+			CurrentData = null;
+			CurrentData = deviceData;
+			RaisePropertyChange(nameof(CurrentData));
+		}
+
+		public void OnAppException(Exception exception)
+		{
+			MessageBox.Show(exception.Message, Constants.ERROR_CAPTION, MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+
+		private void GetDataFromDevice()
 		{
 			var dataChoiceValid = CheckDataChoiceValid(this.StartDateTime, this.EndDateTime);
 			var deviceChoiceValid = CheckDeviceChoiceValid(this.SelectedDevice);
@@ -37,11 +58,7 @@ namespace Rml25Client
 			if (!(dataChoiceValid && deviceChoiceValid))
 				return;
 
-			this.CurrentData = GetDeviceDataRequest?.Invoke(this.SelectedDevice, this.StartDateTime, this.EndDateTime);
-			var dataSwap = this.CurrentData;
-			this.CurrentData = null;
-			this.CurrentData = dataSwap;
-			RaisePropertyChange(nameof(CurrentData));
+			DeviceDataRequest?.Invoke(this.SelectedDevice, this.StartDateTime, this.EndDateTime);
 		}
 
 		private bool CheckDataChoiceValid(DateTime startDate, DateTime endDate)

@@ -13,5 +13,7 @@ namespace Rml25Client
 		public const string NOT_VALID_STARTTIME_ENDTIME = "Время начала отчёта не может быть больше времени конца отчёта";
 		public const string NOT_VALID_STARTTIME_TIMENOW = "Время начала отчёта не может быть больше текущего времени";
 		public const string NOT_VALID_DEVICE_CHOICE = "Выберите датчик";
+
+		public const string ERROR_CAPTION = "Ошибка";
 	}
 }

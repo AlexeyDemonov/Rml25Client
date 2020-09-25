@@ -16,8 +16,11 @@ namespace Rml25Client
 			window.DataContext = viewModel;
 
 			var model = new Model();
-			viewModel.GetDeviceListRequest += model.GetDeviceList;
-			viewModel.GetDeviceDataRequest += model.GetDeviceData;
+			viewModel.DeviceListRequest += model.RequestDeviceList;
+			viewModel.DeviceDataRequest += model.RequestDeviceData;
+			model.DeviceListArrived += viewModel.OnDeviceListArrived;
+			model.DeviceDataArrived += viewModel.OnDeviceDataArrived;
+			model.Exception += viewModel.OnAppException;
 
 			app.InitializeComponent();
 			app.Run();
