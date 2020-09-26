@@ -52,28 +52,28 @@ namespace Rml25Client
 
 		private void GetDataFromDevice()
 		{
-			var dataChoiceValid = CheckDataChoiceValid(this.StartDateTime, this.EndDateTime);
-			var deviceChoiceValid = CheckDeviceChoiceValid(this.SelectedDevice);
+			var dataChoiceValid = CheckDataChoiceValid(StartDateTime, EndDateTime);
+			var deviceChoiceValid = CheckDeviceChoiceValid(SelectedDevice);
 
 			if (!(dataChoiceValid && deviceChoiceValid))
 				return;
 
-			DeviceDataRequest?.Invoke(this.SelectedDevice, this.StartDateTime, this.EndDateTime);
+			DeviceDataRequest?.Invoke(SelectedDevice, StartDateTime, EndDateTime);
 		}
 
 		private bool CheckDataChoiceValid(DateTime startDate, DateTime endDate)
 		{
-			var valid = DateTime.Compare(startDate, endDate) < 0;
+			var validStartEnd = DateTime.Compare(startDate, endDate) < 0;
 
-			if (!valid)
+			if (!validStartEnd)
 				MessageBox.Show(Constants.NOT_VALID_STARTTIME_ENDTIME);
 
-			valid = DateTime.Compare(startDate, DateTime.Now) < 0;
+			var validStartNow = DateTime.Compare(startDate, DateTime.Now) < 0;
 
-			if (!valid)
+			if (!validStartNow)
 				MessageBox.Show(Constants.NOT_VALID_STARTTIME_TIMENOW);
 
-			return valid;
+			return validStartEnd && validStartNow;
 		}
 
 		private bool CheckDeviceChoiceValid(string selectedDevice)

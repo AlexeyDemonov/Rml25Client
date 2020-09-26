@@ -22,9 +22,9 @@ namespace Rml25Client
 			viewModel.DeviceDataRequest += model.RequestDeviceData;
 			model.DeviceListArrived += viewModel.OnDeviceListArrived;
 			model.DeviceDataArrived += viewModel.OnDeviceDataArrived;
-			model.Exception += viewModel.OnAppException;
+			model.ExceptionArrived += viewModel.OnAppException;
 
-			model.Exception += Logger.LogTheException;
+			model.ExceptionArrived += Logger.LogTheException;
 
 			app.InitializeComponent();
 			app.Run();
