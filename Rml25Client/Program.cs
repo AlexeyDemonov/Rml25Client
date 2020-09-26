@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 
 namespace Rml25Client
 {
@@ -18,6 +17,7 @@ namespace Rml25Client
 			window.DataContext = viewModel;
 
 			var model = new Model();
+			viewModel.SetAddressRequest += model.SetServerAddress;
 			viewModel.DeviceListRequest += model.RequestDeviceList;
 			viewModel.DeviceDataRequest += model.RequestDeviceData;
 			model.DeviceListArrived += viewModel.OnDeviceListArrived;

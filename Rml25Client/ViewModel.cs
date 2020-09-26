@@ -6,6 +6,7 @@ namespace Rml25Client
 {
 	partial class ViewModel
 	{
+		public event Action<string,string,string,string> SetAddressRequest;
 		public event Action DeviceListRequest;
 		public event Action<string, DateTime, DateTime> DeviceDataRequest;
 
@@ -16,12 +17,18 @@ namespace Rml25Client
 
 		private void OnApplicationStart(object sender, StartupEventArgs e)
 		{
+			Title = $"{Constants.TITLE} {Constants.VERSION}";
 			DeviceList = new string[] { Constants.NOT_SELECTED };
 			SelectedDevice = DeviceList[0];
 			StartDateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1.0));
 			EndDateTime = DateTime.Now;
 			GetDataCommand = new ViewCommand(GetDataFromDevice);
 
+			var credentialsWindow = new CredentialsRequestWindow();
+			credentialsWindow.ShowDialog();
+
+			credentialsWindow.GetCredentials(out string address, out string port, out string login, out string password);
+			SetAddressRequest?.Invoke(address, port, login, password);
 			DeviceListRequest?.Invoke();
 		}
 
@@ -48,6 +55,7 @@ namespace Rml25Client
 		public void OnAppException(Exception exception)
 		{
 			MessageBox.Show(exception.Message, Constants.ERROR_CAPTION, MessageBoxButton.OK, MessageBoxImage.Error);
+			Application.Current.MainWindow.Close();
 		}
 
 		private void GetDataFromDevice()

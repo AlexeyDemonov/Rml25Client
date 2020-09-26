@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -19,6 +18,7 @@ namespace Rml25Client
 
 		//==========================================================================
 		//Binded properties
+		public string Title { get; set; }
 		public DeviceData[] CurrentData { get; private set; }
 		public string[] DeviceList { get; private set; }
 		public string SelectedDevice { get; set; }

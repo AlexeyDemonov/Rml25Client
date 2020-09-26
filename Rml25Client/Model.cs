@@ -10,7 +10,7 @@ namespace Rml25Client
 		public event Action<string[]> DeviceListArrived;
 		public event Action<DeviceData[]> DeviceDataArrived;
 
-		private string _serverAddress = @"root.gprs.dns-cloud.net";
+		private string _serverAddress = "root.gprs.dns-cloud.net";
 		private string _port = "3306";
 		private string _login = "remote_app";
 		private string _password = "#Er45ty6";

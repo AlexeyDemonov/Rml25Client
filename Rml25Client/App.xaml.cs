@@ -15,7 +15,7 @@ namespace Rml25Client
 	{
 		private void Handle_Startup(object sender, StartupEventArgs e)
 		{
-			this.MainWindow.Show();
+			this.MainWindow?.Show();
 		}
 	}
 }
