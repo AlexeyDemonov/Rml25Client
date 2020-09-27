@@ -15,7 +15,7 @@ namespace Rml25Client
 		private string _login = "remote_app";
 		private string _password = "#Er45ty6";
 
-		private string ConnectionString => $"Server={_serverAddress};Port={_port};Database=test1;Uid={_login};Pwd={_password};";
+		private string ConnectionString => $"Server={_serverAddress};Port={_port};Database={Constants.DATABASE_NAME};Uid={_login};Pwd={_password};";
 
 		public void SetConnectionData(Credentials credentials)
 		{
@@ -32,7 +32,7 @@ namespace Rml25Client
 				using (var connection = new MySqlConnection(ConnectionString))
 				{
 					connection.Open();
-					var query = "SELECT device_id FROM sim800 GROUP BY device_id";
+					var query = $"SELECT device_id FROM {Constants.TABLE_NAME} GROUP BY device_id";
 					var command = new MySqlCommand(query, connection);
 					var reader = command.ExecuteReader();
 
@@ -60,7 +60,7 @@ namespace Rml25Client
 
 					var fromFormatted = FormatDateTime(from);
 					var toFormatted = FormatDateTime(to);
-					var query = $"SELECT * FROM sim800 WHERE device_id = '{deviceName}' AND last_update >= '{fromFormatted}' AND last_update <= '{toFormatted}'";
+					var query = $"SELECT * FROM {Constants.TABLE_NAME} WHERE device_id = '{deviceName}' AND last_update >= '{fromFormatted}' AND last_update <= '{toFormatted}'";
 					var command = new MySqlCommand(query, connection);
 					var reader = command.ExecuteReader();
 

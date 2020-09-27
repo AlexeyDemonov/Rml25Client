@@ -35,7 +35,13 @@ namespace Rml25Client
 			if(loadedCredentials != null)
 				enterWindow.SetCredentials(loadedCredentials);
 
-			enterWindow.ShowDialog();
+			var dialogResult = enterWindow.ShowDialog();
+
+			if(dialogResult != true)
+			{
+				OnAppException(new Exception(message: Constants.REFUSED_ENTER));
+				return;
+			}
 
 			var userInputCredentials = enterWindow.GetCredentials();
 			CredentialsArrived?.Invoke(userInputCredentials);
