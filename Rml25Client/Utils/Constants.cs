@@ -3,7 +3,7 @@
 	static class Constants
 	{
 		public const string TITLE = "RML 25 Клиент";
-		public const string VERSION = "1.0.0";
+		public const string VERSION = "1.0.2";
 
 		public const string DEFAULT_ADDRESS = "127.0.0.1";
 		public const string DEFAULT_PORT = "3306";
