@@ -6,13 +6,15 @@ namespace Rml25Client
 {
 	partial class ViewModel
 	{
-		public event Action<string,string,string,string> SetAddressRequest;
+		public event Func<Credentials> LoadCredentialsRequest;
+		public event Action<Credentials> CredentialsArrived;
 		public event Action DeviceListRequest;
 		public event Action<string, DateTime, DateTime> DeviceDataRequest;
 
 		public ViewModel()
 		{
 			Application.Current.Startup += OnApplicationStart;
+			Application.Current.MainWindow.Loaded += OnMainWindowLoaded;
 		}
 
 		private void OnApplicationStart(object sender, StartupEventArgs e)
@@ -23,12 +25,20 @@ namespace Rml25Client
 			StartDateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1.0));
 			EndDateTime = DateTime.Now;
 			GetDataCommand = new ViewCommand(GetDataFromDevice);
+		}
+		
+		private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+		{
+			var loadedCredentials = LoadCredentialsRequest?.Invoke();
+			var enterWindow = new CredentialsRequestWindow();
 
-			var credentialsWindow = new CredentialsRequestWindow();
-			credentialsWindow.ShowDialog();
+			if(loadedCredentials != null)
+				enterWindow.SetCredentials(loadedCredentials);
 
-			credentialsWindow.GetCredentials(out string address, out string port, out string login, out string password);
-			SetAddressRequest?.Invoke(address, port, login, password);
+			enterWindow.ShowDialog();
+
+			var userInputCredentials = enterWindow.GetCredentials();
+			CredentialsArrived?.Invoke(userInputCredentials);
 			DeviceListRequest?.Invoke();
 		}
 

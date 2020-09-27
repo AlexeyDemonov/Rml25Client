@@ -17,12 +17,12 @@ namespace Rml25Client
 
 		private string ConnectionString => $"Server={_serverAddress};Port={_port};Database=test1;Uid={_login};Pwd={_password};";
 
-		public void SetServerAddress(string address, string port, string login, string password)
+		public void SetConnectionData(Credentials credentials)
 		{
-			_serverAddress = address;
-			_port = port;
-			_login = login;
-			_password = password;
+			_serverAddress = credentials.Address;
+			_port = credentials.Port;
+			_login = credentials.Login;
+			_password = credentials.Password;
 		}
 
 		public void RequestDeviceList()

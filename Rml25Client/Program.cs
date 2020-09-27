@@ -17,12 +17,16 @@ namespace Rml25Client
 			window.DataContext = viewModel;
 
 			var model = new Model();
-			viewModel.SetAddressRequest += model.SetServerAddress;
+			viewModel.CredentialsArrived += model.SetConnectionData;
 			viewModel.DeviceListRequest += model.RequestDeviceList;
 			viewModel.DeviceDataRequest += model.RequestDeviceData;
 			model.DeviceListArrived += viewModel.OnDeviceListArrived;
 			model.DeviceDataArrived += viewModel.OnDeviceDataArrived;
 			model.ExceptionArrived += viewModel.OnAppException;
+
+			var credentialsSaveLoader = new CredentialsSaveLoader();
+			viewModel.LoadCredentialsRequest += credentialsSaveLoader.LoadCredentials;
+			viewModel.CredentialsArrived += credentialsSaveLoader.SaveCredentials;
 
 			model.ExceptionArrived += Logger.LogTheException;
 

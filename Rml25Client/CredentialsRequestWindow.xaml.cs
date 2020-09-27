@@ -19,6 +19,11 @@ namespace Rml25Client
 		public string Address { get; set; }
 		public string Port { get; set; }
 		public string Login { get; set; }
+		public string Password
+		{
+			get => this.passwordBox.Password;
+			set => this.passwordBox.Password = value;
+		}
 
 		public CredentialsRequestWindow()
 		{
@@ -30,12 +35,17 @@ namespace Rml25Client
 			this.DataContext = this;
 		}
 
-		public void GetCredentials(out string address, out string port, out string login, out string password)
+		public Credentials GetCredentials()
 		{
-			address = Address;
-			port = Port;
-			login = Login;
-			password = this.passwordBox.Password;
+			return new Credentials() { Address = this.Address, Port = this.Port, Login = this.Login, Password = this.Password };
+		}
+
+		public void SetCredentials(Credentials credentials)
+		{
+			Address = credentials.Address;
+			Port = credentials.Port;
+			Login = credentials.Login;
+			Password = credentials.Password;
 		}
 
 		private void OKButtonClick(object sender, RoutedEventArgs e)
