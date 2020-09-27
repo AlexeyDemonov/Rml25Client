@@ -47,6 +47,7 @@ namespace Rml25Client
 				if (encodedPassword/*still*/== null)
 				{
 					File.Delete(PASSWORD_FILENAME);
+					return string.Empty;
 				}
 
 				return DecodePassword(encodedPassword, CODEWORD);

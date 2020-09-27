@@ -14,7 +14,10 @@ namespace Rml25Client
 			app.MainWindow = window;
 
 			var viewModel = new ViewModel();
+			app.Startup += viewModel.OnApplicationStart;
+			app.MainWindow.Loaded += viewModel.OnMainWindowLoaded;
 			window.DataContext = viewModel;
+
 
 			var model = new Model();
 			viewModel.CredentialsArrived += model.SetConnectionData;
@@ -23,12 +26,17 @@ namespace Rml25Client
 			model.DeviceListArrived += viewModel.OnDeviceListArrived;
 			model.DeviceDataArrived += viewModel.OnDeviceDataArrived;
 			model.ExceptionArrived += viewModel.OnAppException;
+			
+			model.ExceptionArrived += Logger.LogTheException;
 
 			var credentialsSaveLoader = new CredentialsSaveLoader();
 			viewModel.LoadCredentialsRequest += credentialsSaveLoader.LoadCredentials;
 			viewModel.CredentialsArrived += credentialsSaveLoader.SaveCredentials;
 
-			model.ExceptionArrived += Logger.LogTheException;
+			var autoUpdater = new AutoUpdater();
+			autoUpdater.DeviceDataRequest += model.RequestDeviceData;
+			viewModel.AutoUpdateRequest += autoUpdater.StartAutoUpdate;
+			viewModel.StopAutoUpdateRequest += autoUpdater.StopAutoUpdate;
 
 			app.InitializeComponent();
 			app.Run();

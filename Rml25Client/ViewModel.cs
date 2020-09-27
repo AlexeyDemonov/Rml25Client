@@ -10,24 +10,15 @@ namespace Rml25Client
 		public event Action<Credentials> CredentialsArrived;
 		public event Action DeviceListRequest;
 		public event Action<string, DateTime, DateTime> DeviceDataRequest;
+		public event Action<string, UpdateRate,UpdateScope> AutoUpdateRequest;
+		public event Func<bool> StopAutoUpdateRequest;
 
-		public ViewModel()
+		public void OnApplicationStart(object sender, StartupEventArgs e)
 		{
-			Application.Current.Startup += OnApplicationStart;
-			Application.Current.MainWindow.Loaded += OnMainWindowLoaded;
-		}
-
-		private void OnApplicationStart(object sender, StartupEventArgs e)
-		{
-			Title = $"{Constants.TITLE} {Constants.VERSION}";
-			DeviceList = new string[] { Constants.NOT_SELECTED };
-			SelectedDevice = DeviceList[0];
-			StartDateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1.0));
-			EndDateTime = DateTime.Now;
-			GetDataCommand = new ViewCommand(GetDataFromDevice);
+			InitializeBindedProperties();
 		}
 		
-		private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+		public void OnMainWindowLoaded(object sender, RoutedEventArgs e)
 		{
 			var loadedCredentials = LoadCredentialsRequest?.Invoke();
 			var enterWindow = new CredentialsRequestWindow();
@@ -74,40 +65,9 @@ namespace Rml25Client
 			Application.Current.MainWindow.Close();
 		}
 
-		private void GetDataFromDevice()
+		private void WarnUser(string warning)
 		{
-			var dataChoiceValid = CheckDataChoiceValid(StartDateTime, EndDateTime);
-			var deviceChoiceValid = CheckDeviceChoiceValid(SelectedDevice);
-
-			if (!(dataChoiceValid && deviceChoiceValid))
-				return;
-
-			DeviceDataRequest?.Invoke(SelectedDevice, StartDateTime, EndDateTime);
-		}
-
-		private bool CheckDataChoiceValid(DateTime startDate, DateTime endDate)
-		{
-			var validStartEnd = DateTime.Compare(startDate, endDate) < 0;
-
-			if (!validStartEnd)
-				MessageBox.Show(Constants.NOT_VALID_STARTTIME_ENDTIME);
-
-			var validStartNow = DateTime.Compare(startDate, DateTime.Now) < 0;
-
-			if (!validStartNow)
-				MessageBox.Show(Constants.NOT_VALID_STARTTIME_TIMENOW);
-
-			return validStartEnd && validStartNow;
-		}
-
-		private bool CheckDeviceChoiceValid(string selectedDevice)
-		{
-			var valid = selectedDevice != Constants.NOT_SELECTED;
-
-			if (!valid)
-				MessageBox.Show(Constants.NOT_VALID_DEVICE_CHOICE);
-
-			return valid;
+			MessageBox.Show(warning, string.Empty, MessageBoxButton.OK, MessageBoxImage.Warning);
 		}
 	}
 }

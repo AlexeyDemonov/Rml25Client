@@ -10,12 +10,17 @@
 		public const string DATABASE_NAME = "test1";
 		public const string TABLE_NAME = "sim800";
 
+		public const string REFUSED_ENTER = "Для работы приложения необходимо ввести данные и нажать кнопку 'Подключиться'";
+
 		public const string NOT_SELECTED = "----";
 
 		public const string ERROR_CAPTION = "Ошибка";
+
 		public const string NOT_VALID_STARTTIME_ENDTIME = "Время начала отчёта не может быть больше времени конца отчёта";
 		public const string NOT_VALID_STARTTIME_TIMENOW = "Время начала отчёта не может быть больше текущего времени";
 		public const string NOT_VALID_DEVICE_CHOICE = "Выберите датчик";
-		public const string REFUSED_ENTER = "Для работы приложения необходимо ввести данные и нажать кнопку 'Подключиться'";
+		public const string NOT_VALID_UPDATE_CHOICE = "Выберите период и масштаб автообновления данных";
+		public const string AUTOUPDATE_START = "Автообновление запущено";
+		public const string AUTOUPDATE_END = "Автообновление остановлено";
 	}
 }
