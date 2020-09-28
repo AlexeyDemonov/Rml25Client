@@ -125,6 +125,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\DeviceData.cs" />
     <Compile Include="Utils\AutoUpdater.cs" />
     <Compile Include="Interface\UpdateRateToStringConverter.cs" />
     <Compile Include="Interface\UpdateScopeToStringConverter.cs" />
@@ -154,7 +155,7 @@
       <DependentUpon>CredentialsRequestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\CredentialsSaveLoader.cs" />
-    <Compile Include="Entities\DeviceData.cs" />
+    <Compile Include="Entities\WaterLevelData.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

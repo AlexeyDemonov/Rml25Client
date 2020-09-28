@@ -24,5 +24,13 @@ namespace Rml25Client
 		{
 			InitializeComponent();
 		}
+
+		//DataGrid breaks ScrollViewer's mouse wheel scroll, this is a solution for that problem
+		private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+		{
+			var scrollViewer = (ScrollViewer)sender;
+			scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+			e.Handled = true;
+		}
 	}
 }

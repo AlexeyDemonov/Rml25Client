@@ -3,12 +3,13 @@
 	static class Constants
 	{
 		public const string TITLE = "RML 25 Клиент";
-		public const string VERSION = "1.0.2";
+		public const string VERSION = "1.0.4";
+
+		public const string TABLE_TITLE_TEMPLATE = "Датчик: {0} (Батарея:{1}В Сигнал:{2})";
 
 		public const string DEFAULT_ADDRESS = "127.0.0.1";
 		public const string DEFAULT_PORT = "3306";
-		public const string DATABASE_NAME = "test1";
-		public const string TABLE_NAME = "sim800";
+		public const string DATABASE_NAME = "workdb";
 
 		public const string REFUSED_ENTER = "Для работы приложения необходимо ввести данные и нажать кнопку 'Подключиться'";
 

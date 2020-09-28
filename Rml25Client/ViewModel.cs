@@ -52,11 +52,14 @@ namespace Rml25Client
 			RaisePropertyChange(nameof(SelectedDevice));
 		}
 
-		public void OnDeviceDataArrived(DeviceData[] deviceData)
+		public void OnDeviceDataArrived(DeviceData deviceData)
 		{
 			CurrentData = null;
-			CurrentData = deviceData;
+			CurrentData = deviceData.WaterLevelData;
 			RaisePropertyChange(nameof(CurrentData));
+
+			TableTitle = string.Format(Constants.TABLE_TITLE_TEMPLATE, deviceData.DeviceName, deviceData.BatteryLevel.ToString("F2"), deviceData.SignalLevel);
+			RaisePropertyChange(nameof(TableTitle));
 		}
 
 		public void OnAppException(Exception exception)

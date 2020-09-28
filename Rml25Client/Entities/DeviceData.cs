@@ -4,7 +4,12 @@ namespace Rml25Client
 {
 	class DeviceData
 	{
-		public int WaterLevel { get; set; }
-		public DateTime DateTime { get; set; }
+		public string DeviceName;
+		public float BatteryLevel;
+		public DateTime BatteryLevelDate;
+		public int SignalLevel;
+		public DateTime SignalLevelDate;
+
+		public WaterLevelData[] WaterLevelData;
 	}
 }
