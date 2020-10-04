@@ -3,7 +3,7 @@
 	static class Constants
 	{
 		public const string TITLE = "RML 25 Клиент";
-		public const string VERSION = "1.0.4";
+		public const string VERSION = "1.0.5";
 
 		public const string TABLE_TITLE_TEMPLATE = "Датчик: {0} (Батарея:{1}В Сигнал:{2})";
 

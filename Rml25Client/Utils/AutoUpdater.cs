@@ -30,7 +30,7 @@ namespace Rml25Client
 			Task.Run(() => AutoUpdate(device, updateRate, updateScope, _cancellation.Token));
 		}
 
-		private async void AutoUpdate(string device, UpdateRate updateRate, UpdateScope updateScope, CancellationToken cancellationToken)
+		private void AutoUpdate(string device, UpdateRate updateRate, UpdateScope updateScope, CancellationToken cancellationToken)
 		{
 			while (!cancellationToken.IsCancellationRequested)
 			{
@@ -39,7 +39,7 @@ namespace Rml25Client
 
 				DeviceDataRequest?.Invoke(device, fromTime, toTime);
 
-				await Task.Delay(TimeSpan.FromMinutes((double)updateRate));
+				Task.Delay(TimeSpan.FromMinutes((double)updateRate)).Wait();
 			}
 		}
 	}
