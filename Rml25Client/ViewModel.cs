@@ -13,6 +13,8 @@ namespace Rml25Client
 		public event Action<string, UpdateRate,UpdateScope> AutoUpdateRequest;
 		public event Func<bool> StopAutoUpdateRequest;
 
+		private bool _closeOnException = true;
+
 		public void OnApplicationStart(object sender, StartupEventArgs e)
 		{
 			InitializeBindedProperties();
@@ -50,6 +52,8 @@ namespace Rml25Client
 
 			RaisePropertyChange(nameof(DeviceList));
 			RaisePropertyChange(nameof(SelectedDevice));
+
+			_closeOnException = false;
 		}
 
 		public void OnDeviceDataArrived(DeviceData deviceData)
@@ -65,7 +69,9 @@ namespace Rml25Client
 		public void OnAppException(Exception exception)
 		{
 			MessageBox.Show(exception.Message, Constants.ERROR_CAPTION, MessageBoxButton.OK, MessageBoxImage.Error);
-			Application.Current.MainWindow.Close();
+
+			if (_closeOnException)
+				Application.Current.MainWindow.Close();
 		}
 
 		private void WarnUser(string warning)
